@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_padding">3.84dp</dimen>
+    <dimen name="title_text_size">16sp</dimen>
+    <dimen name="title_btn_padding">19.2dp</dimen>
+    <dimen name="title_panel_height">42.24dp</dimen>
+    <dimen name="title_action_text_size">20sp</dimen>
+    <dimen name="title_action_padding">4.8dp</dimen>
+    <dimen name="title_action_divider_padding">13.92dp</dimen>
+    <dimen name="title_action_divider_margin">1.92dp</dimen>
+    <dimen name="title_action_divider_wid">2.88dp</dimen>
+
+</resources>
