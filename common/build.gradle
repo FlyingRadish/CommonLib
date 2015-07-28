@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 
+def LEANCLOUD_ID = "yozgvkoqd83os9lizr4j22s2q87b8qfk2v1b8d6w38xdu3kw";
+def LEANCLOUD_KEY = "bi6hfh5dkl4b2po5ll3fwitwuzy37j06ytgv649u6kz6dzeu";
+
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -11,6 +14,8 @@ android {
         versionName "1.0"
 
         buildConfigField "boolean", "ENABLE_TITLE_AUTO_HIDE", "true"
+        buildConfigField "String", "LEANCLOUD_ID", "\"${LEANCLOUD_ID}\""
+        buildConfigField "String", "LEANCLOUD_KEY", "\"${LEANCLOUD_KEY}\""
     }
     buildTypes {
         release {

@@ -10,10 +10,8 @@ import com.quxue.common.logger.Log;
 /**
  * Created by houxg on 2015/6/23.
  */
-public class App extends Application implements Thread.UncaughtExceptionHandler {
+public abstract class App extends Application implements Thread.UncaughtExceptionHandler {
 
-    private final static String LEANCLOUDID = "yozgvkoqd83os9lizr4j22s2q87b8qfk2v1b8d6w38xdu3kw";
-    private final static String LEANCLOUDKEY = "bi6hfh5dkl4b2po5ll3fwitwuzy37j06ytgv649u6kz6dzeu";
     private static RequestQueue queue;
     private static App ctx;
 
@@ -29,10 +27,8 @@ public class App extends Application implements Thread.UncaughtExceptionHandler 
     public void onCreate() {
         super.onCreate();
         ctx = this;
-        AVOSCloud.initialize(this, LEANCLOUDID, LEANCLOUDKEY);
-//        if (!BuildConfig.DEBUG) {
+        AVOSCloud.initialize(this, BuildConfig.LEANCLOUD_ID, BuildConfig.LEANCLOUD_KEY);
         Thread.setDefaultUncaughtExceptionHandler(this);
-//        }
     }
 
     @Override
@@ -40,4 +36,6 @@ public class App extends Application implements Thread.UncaughtExceptionHandler 
         Log.e(BuildConfig.APPLICATION_ID, Log.getStackTraceString(ex));
         System.exit(0);
     }
+
+    protected abstract String getReportBugTag();
 }
