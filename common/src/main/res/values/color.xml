@@ -5,12 +5,6 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
-
-    <color name="text_40">#ababab</color>
-    <color name="text_60">#999999</color>
-    <color name="text_80">#484848</color>
-    <color name="text_100">#3f3f3f</color>
-
     <color name="gray_50">#fafafa</color>
     <color name="gray_100">#f5f5f5</color>
     <color name="gray_200">#eeeeee</color>
@@ -56,41 +50,8 @@
     <color name="dialog_btn_text_positive_n">@color/theme</color>
     <color name="dialog_btn_text_negative_n">#757575</color>
     <color name="dialog_title_text">#424242</color>
-
-
     <color name="divider">#efefef</color>
-    <color name="layout_stroke">#e7e7e7</color>
-    <color name="bg_gray">#efefef</color>
-
-    <color name="theme_yellow">#ff9933</color>
-    <color name="theme_yellow_p">#e5e55c</color>
-
-    <color name="white_p">#e5e5e5</color>
-
-    <color name="btn_gray_n">#efefef</color>
-    <color name="btn_gray_p">#d7d7d7</color>
-
 
     <color name="status_bar">@color/theme</color>
-
-
-    <color name="teacher_detail_panel_number">@color/theme</color>
-    <color name="teacher_detail_panel_text">#999999</color>
-
-    <color name="yellow_round_font">#ff9933</color>
-    <color name="blue_round_font">@color/theme</color>
-
-    <color name="tab_bg">#f4f4f4</color>
-    <color name="tab_divider">#999999</color>
-
-
-    <color name="menu_stroke_teacher_sort">#d8d8d8</color>
-
-    <color name="item_class_line">#b7babe</color>
-
-
-    <color name="text_c1">#333333</color>
-    <color name="text_c2">#666666</color>
-    <color name="text_c3">#a8a8a8</color>
 
 </resources>

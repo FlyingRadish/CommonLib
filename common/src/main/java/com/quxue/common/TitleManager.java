@@ -92,21 +92,15 @@ public class TitleManager {
         }
     }
 
-<<<<<<< .mine
-    public void setRightButtonVisibility() {
-=======
+
     public void setRightButtonVisible(){
->>>>>>> .r444
         View view = activity.findViewById(R.id.btn_title_right);
         if (view == null) {
             return;
         }
         view.setVisibility(View.VISIBLE);
-<<<<<<< .mine
-=======
     }
 
->>>>>>> .r444
     public void setRightButtonText(String text){
         View view = activity.findViewById(R.id.btn_title_right);
         if (view == null) {

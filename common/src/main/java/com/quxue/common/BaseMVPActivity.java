@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ListView;
 
-import com.quxue.common.logger.Log;
 import com.quxue.common.nuclear.presenter.NuclearPresenter;
 import com.quxue.common.nuclear.view.NuclearActivity;
 import com.quxue.common.toolbox.StatusBarTool;
@@ -67,35 +65,53 @@ public abstract class BaseMVPActivity<T extends NuclearPresenter> extends Nuclea
     }
 
     float titleHeight;
-    boolean canMove;
-    boolean lastState;
-    float lastX;
+    float lastY;
+    View autoHideScrollView;
+    View scrollContainer;
 
-    //TODO:un-finish
-    public void enableTitleAutoHide(ListView listView) {
+    public boolean isTitleShowComplete() {
+        View titlePanel = titleManager.getTitlePanel();
+        return titlePanel == null || titlePanel.getTranslationY() == 0;
+
+    }
+
+    /**
+     * 设置自动隐藏标题，标题栏将随滚动向上移动隐藏，向下滚动时标题栏随滚动下移显示
+     *
+     * @param scrollView 滚动View
+     * @param container  滚动View所在的容器View，或其本身
+     */
+    public void registerTitleAutoHide(View scrollView, View container) {
+        if (!BuildConfig.ENABLE_TITLE_AUTO_HIDE) {
+            return;
+        }
         final View titlePanel = titleManager.getTitlePanel();
         if (titlePanel == null) {
             return;
         }
 
-        titleHeight = getResources().getDimension(R.dimen.title_panel_height);
+        unRegisterTitleAutoHide();  //注销掉此前的
+        autoHideScrollView = scrollView;
+        scrollContainer = container;
 
-        listView.setOnTouchListener(new View.OnTouchListener() {
+        titleHeight = getResources().getDimension(R.dimen.title_panel_height);
+        autoHideScrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
-                float nowX = event.getRawX();
-                if (action == MotionEvent.ACTION_DOWN) {
-                    lastX = nowX;
-                    Log.i("houxg", "change");
-                } else if (action == MotionEvent.ACTION_MOVE) {
-                    float dx = nowX - lastX;
-                    float titleY = titlePanel.getY();
-                    float finalY = titleY - dx / 2;
-                    finalY = finalY > 0 ? 0 : finalY;
-                    finalY = finalY < -titleHeight ? -titleHeight : finalY;
-                    titlePanel.setY(finalY);
-                    Log.i("houxg", "move:" + dx + ", to:" + finalY);
+                float nowY = event.getRawY();
+
+                if (action == MotionEvent.ACTION_MOVE) {
+                    float dy = lastY == -1 ? 0 : nowY - lastY;  //获取移动距离
+                    float offsetY = titlePanel.getTranslationY() + dy;
+                    offsetY = offsetY > 0 ? 0 : offsetY;
+                    offsetY = offsetY < -titleHeight ? -titleHeight : offsetY;
+                    titlePanel.setTranslationY(offsetY);    //移动标题栏
+                    scrollContainer.setTranslationY(offsetY);   //移动滚动View或其本身
+                    lastY = nowY;   //记录本次的Y
+                } else {
+                    //ACTION_UP/ACTION_DOWN时，lastY会记录错误，因此设为-1,在进入ACTION_MOVE时，排除掉第一次事件
+                    lastY = -1;
                 }
                 return false;
             }
@@ -103,11 +119,31 @@ public abstract class BaseMVPActivity<T extends NuclearPresenter> extends Nuclea
     }
 
 
+    public void unRegisterTitleAutoHide() {
+        if (!BuildConfig.ENABLE_TITLE_AUTO_HIDE) {
+            return;
+        }
+        if (autoHideScrollView != null) {
+            autoHideScrollView.setOnTouchListener(null);
+            autoHideScrollView = null;
+        }
+        if (scrollContainer != null) {
+            scrollContainer.setTranslationY(0);
+            scrollContainer = null;
+        }
+        if (!isTitleShowComplete()) {
+            View titlePanel = titleManager.getTitlePanel();
+            if (titlePanel != null) {
+                titlePanel.setTranslationY(0);
+            }
+        }
+    }
+
     public void setRightButtonVisibility() {
         titleManager.setRightButtonVisible();
     }
 
-	public void setRightButtonText(String text){
+    public void setRightButtonText(String text) {
         titleManager.setRightButtonText(text);
     }
 
