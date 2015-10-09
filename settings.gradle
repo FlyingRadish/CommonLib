@@ -1,2 +1,0 @@
-include ':common', ':Volley'
-project(':Volley').projectDir = new File('thrid-party/Volley')
